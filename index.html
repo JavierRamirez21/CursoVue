@@ -34,6 +34,17 @@
         .open {
             background-color: #b5e7a0;
         }
+        .lista{
+            display: flex;
+            flex-direction: column;
+        }
+        .item{
+            border: 1px solid black;
+        }
+        .titulo{
+            font-weight: bold;
+            font-size: 1.6rem ;
+        }
     </style>
     <script src="https://unpkg.com/vue@3"></script>
     <div id="app"></div>
@@ -54,15 +65,27 @@
             data(){
                     return{
                         text:"Puerta Cerrada",
-                        open:false
-                        
-                    };
+                        open:false,
+                        username:"",
+                        posts:[{
+                        titulo:"Tituo 1",
+                        descripcion:"Lorem Ipsum..."
+                        },{
+                        titulo:"Tituo 2",
+                        descripcion:"Lorem Ipsum..."
+                        },{
+                        titulo:"Tituo 3",
+                        descripcion:"Lorem Ipsum..."
+                        }
+                        ]
+                    }
                 },watch:{
                     open(value){
                         if(value){
-                            this.text="Puerta Abierta";
+                            this.text="Cerrar Sesion";
                         }else{
-                            this.text="Puerta Cerrada";
+                            this.text="Accede a tu cuenta";
+                            this.username=""
                         }
                     }
                 },
@@ -75,7 +98,25 @@
                     }
                 },template:` <div class="container" :class="styles">
                             <h2>{{text}}</h2>
-                            <button @click="open= !open">{{Label}}</button>
+                            <div v-if="open">
+                                <p>Hola, {{username}}</p>
+                                <div class="lista">
+                                    <div v-for="(item,i) in posts" :key="i" class="item">
+                                        <div class="titulo">{{item.titulo}}</div>
+                                        <p>{{item.descripcion}}</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div v-else>
+                                <label>Username</label>   
+                                <input type="text" v-model="username"> 
+                            </div>
+                            <button @click="open= !open">
+                                <div v-if="!open">Acceder</div>
+                                <div v-else>Salir</div>
+                            </button>
                             </div>`
                             
             }).mount("#app");

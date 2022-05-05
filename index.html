@@ -10,18 +10,35 @@
     <script src="https://unpkg.com/vue@3"></script>
     <div id="app"></div>
     <script>
+        //const vm = Vue.createApp({
+        //     data(){
+        //         return{
+        //             counter:0
+        //         };
+        //     },
+        //     methods:{
+        //         submit(){
+        //             this.counter++;
+        //         }
+        //     },template:`<form v-on:submit="submit"><button>{{counter}}</button></form>`
+        // }).mount("#app");
         const vm = Vue.createApp({
             data(){
-                return{
-                    counter:0
-                };
-            },
-            methods:{
-                submit(){
-                    this.counter++;
-                }
-            },template:`<form v-on:submit.prevent="submit"><button>{{counter}}</button></form>`
-        }).mount("#app");
+                    return{
+                        counter:0
+                    };
+                },
+                methods:{
+                    Incrementar(){
+                        this.counter++;
+                    },
+                    Decrementar(){
+                        this.counter--;
+                    }
+                },template:`  <p>{{ counter }}</p>
+                        <button v-on:click="Incrementar">+1</button>
+                        <button v-on:click="Decrementar">-1</button>`,
+            }).mount("#app");
     </script>
 </body>
 </html>

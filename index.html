@@ -7,6 +7,34 @@
     <title>Document</title>
 </head>
 <body>
+    <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #app, .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+        button {
+            margin-top: 24px;
+            border: none;
+            background-color: white;
+            padding: 8px 24px;
+            border-radius: 12px;
+        }
+        .closed {
+            background-color: #eca1a6;
+        }
+        .open {
+            background-color: #b5e7a0;
+        }
+    </style>
     <script src="https://unpkg.com/vue@3"></script>
     <div id="app"></div>
     <script>
@@ -25,19 +53,31 @@
         const vm = Vue.createApp({
             data(){
                     return{
-                        counter:0
+                        text:"Puerta Cerrada",
+                        open:false
+                        
                     };
-                },
-                methods:{
-                    Incrementar(){
-                        this.counter++;
-                    },
-                    Decrementar(){
-                        this.counter--;
+                },watch:{
+                    open(value){
+                        if(value){
+                            this.text="Puerta Abierta";
+                        }else{
+                            this.text="Puerta Cerrada";
+                        }
                     }
-                },template:`  <p>{{ counter }}</p>
-                        <button v-on:click="Incrementar">+1</button>
-                        <button v-on:click="Decrementar">-1</button>`,
+                },
+                computed:{
+                    Label(){
+                        return this.open ? "Cerrar" : "Abrir";
+                    },
+                    styles(){
+                        return this.open ? ['open']:['closed'];
+                    }
+                },template:` <div class="container" :class="styles">
+                            <h2>{{text}}</h2>
+                            <button @click="open= !open">{{Label}}</button>
+                            </div>`
+                            
             }).mount("#app");
     </script>
 </body>
